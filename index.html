@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMC</title>
+    <style>
+    body{
+    padding: 50px;
+    margin: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background: linear-gradient(to right, #2b0128, #eb5b5b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container{
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    max-width: 1100px;
+    width: 100%;
+}
+
+/* IMAGEM */
+img{
+    width: 450px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
+
+/* BLOCO DO FORMULÁRIO */
+.content{
+    background-color: rgb(10, 10, 10);
+    padding: 30px;
+    border-radius: 20px;
+    width: 400px;
+    max-width: 100%;
+    text-align: center;
+}
+
+h1{
+    color: #f54360;
+}
+
+.peso, .altura{
+    color: #f54360;
+    margin: 12px;
+    padding: 12px;
+}
+
+input{
+    background-color: #daf3f1;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(10, 10, 10, 0.767);
+    border: none;
+    padding: 10px;
+    width: 90%;
+    font-size: 16px;
+    margin: 5px;
+}
+
+#res{
+    padding: 22px;
+    margin: 12px;
+    color: #f54360;
+    font-size: 18px;
+}
+
+
+
+@media (max-width: 768px) {
+
+    body{
+        padding: 20px;
+        flex-direction: column;
+    }
+
+    .container{
+        flex-direction: column; 
+        gap: 20px;
+    }
+
+    img{
+        width: 80%;
+        max-width: 300px;
+    }
+
+    .content{
+        width: 95%;
+        padding: 20px;
+    }
+
+    h1{
+        font-size: 22px;
+    }
+    
+
+    input{
+        font-size: 17px;
+        width: 80%;
+        margin: 12px;
+    }
+
+    #res{
+        font-size: 17px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+     <img src="imc.png" alt="foto">
+
+    <div class="content">
+        <h1>IMC !!!</h1>
+        <form onsubmit="calcular(event)">
+            <p class="peso">
+                PESO (Kg):
+                <input type="text" id="peso" placeholder="Digite seu peso...">
+            </p>
+
+            <p class="altura">
+                ALTURA (Cm):
+                <input type="text" id="altura" placeholder="Digite seu altura...">
+            </p>
+
+            <input type="submit" value="calcular">
+        </form>
+
+        <div id="res"></div>
+    </div>
+    </div>
+
+    <script>
+        function calcular(event){
+            event.preventDefault()
+
+            let peso = document.getElementById("peso").value
+            let altura = document.getElementById("altura").value
+            let res = document.getElementById("res")
+
+            if (peso === "" || altura ===""){
+                res.innerHTML = "PREENCHE OS DADOS!"
+                return
+            }
+
+
+            peso = Number(peso)
+            altura = Number(altura)
+
+            if(peso <= 0 || altura <= 0){
+                res.innerHTML = "PREENCHE OS DADOS!"
+                return
+            }
+         
+
+            altura = altura / 100
+
+            let imc = peso / (altura * altura)
+
+            let  classificacao = ""
+
+            if( imc < 18.5 ){
+                classificacao = "ABAIXO DO PESO" 
+
+            } else if(imc >= 18.5 && imc <= 24.9){
+
+                classificacao = "PESO NORMAL"
+
+            } else if (imc >= 25.0 && imc < 29.9){
+
+                classificacao = "SOBREPESO"
+
+            }else if (imc >= 30.0 && imc < 34.9){
+                classificacao = "OBESIDADE GRAU 1"
+            } else if (imc >= 35.0 && imc < 39.9){
+                classificacao = "OBESIDADE GRAU 2"
+            } else {
+                classificacao = "OBESIDADE GRAU 3 (GRAVE)"
+            }
+
+            res.innerHTML = `SEU IMC: ${imc.toFixed(2)}<br>
+            CLASSIFICAÇÃO: ${classificacao} `
+        }
+    </script>
+    
+</body>
+</html>
